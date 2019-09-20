@@ -24,6 +24,7 @@ export default StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 15,
     color: '#ededed',
+    paddingLeft: 8,
   },
   padding: {
     paddingTop: 15,
@@ -31,7 +32,7 @@ export default StyleSheet.create({
     paddingRight: 15,
   },
   userBox: {
-    marginTop: 15,
+    marginBottom: 8,
     width: '100%',
     borderBottomWidth: 1,
     borderColor: '#ccc',
