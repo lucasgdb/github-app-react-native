@@ -1,13 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  scrollView: {
-    flex: 1,
-    backgroundColor: '#8A05BE',
-  },
-  center: {
-    alignItems: 'center',
-  },
   h1: {
     fontSize: 35,
     color: '#ededed',

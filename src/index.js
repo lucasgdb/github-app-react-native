@@ -14,29 +14,9 @@ import {
 import { CirclesLoader } from 'react-native-indicator';
 import FA5 from 'react-native-vector-icons/FontAwesome5';
 import ADIcon from 'react-native-vector-icons/AntDesign';
+import Bio from './components/Bio';
+import API from './services/API';
 import styles from './styles';
-import axios from 'axios';
-
-const Bio = ({ bio, icons }) =>
-  bio
-    .split(' ')
-    .filter(text => text !== '')
-    .map((text, index) => ({ text, id: index }))
-    .map((element, elementIndex, array) =>
-      element.text[0] === ':' &&
-      element.text[element.text.length - 1] === ':' &&
-      icons[element.text.replace(/[:]/g, '')] ? (
-        <Text key={element.id}>
-          <Image
-            style={{ width: 16, height: 16 }}
-            source={{ uri: icons[element.text.replace(/[:]/g, '')] }}
-          />
-          {array.length - 1 === elementIndex ? '' : ' '}
-        </Text>
-      ) : (
-        `${element.text}${array.length - 1 === elementIndex ? '' : ' '}`
-      ),
-    );
 
 export default function App() {
   const [users, setUsers] = useState([]);
@@ -46,15 +26,13 @@ export default function App() {
 
   useEffect(() => {
     async function getIcons() {
-      const emojis = await axios.get('https://api.github.com/emojis');
+      const emojis = await API.get('/emojis');
 
       setIcons(emojis.data);
     }
 
     getIcons();
   }, []);
-
-  console.log('test');
 
   const handleOnChangeText = text => {
     setUsername(text);
@@ -65,7 +43,7 @@ export default function App() {
       try {
         setLoading(true);
         const name = username.trim().toLowerCase();
-        const user = await axios.get(`https://api.github.com/users/${name}`);
+        const user = await API.get(`/users/${name}`);
 
         if (users.findIndex(element => element.id === user.data.id) === -1) {
           setUsers([...users, user.data]);
@@ -92,18 +70,29 @@ export default function App() {
   };
 
   return (
-    <View style={styles.scrollView}>
+    <View style={{ flex: 1, backgroundColor: '#8A05BE' }}>
       <ScrollView>
         <StatusBar backgroundColor="#8A05BE" barStyle="light-content" />
-        <View style={styles.center}>
-          <Text style={styles.h1}>
-            <FA5 name="github" size={30} /> GitHub API
-          </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL(
+                'https://github.com/lucasnaja/github-app-react-native',
+              )
+            }>
+            <FA5 name="github" size={30} color="#111" />
+          </TouchableOpacity>
+          <Text style={styles.h1}> GitHub API</Text>
         </View>
 
         <View style={styles.divider} />
 
-        <View style={{ ...styles.center, ...styles.padding }}>
+        <View style={{ alignItems: 'center', ...styles.padding }}>
           <Text style={{ ...styles.whiteColor, alignSelf: 'flex-start' }}>
             Username
           </Text>
@@ -210,9 +199,11 @@ export default function App() {
         </View>
       </ScrollView>
 
-      <View>
-        <Text style={{ textAlign: 'center', color: '#ccc', fontSize: 18 }}>
-          Made with <ADIcon name="heart" size={15} /> by Lucas Bittencourt
+      <View
+        style={{ height: 30, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: '#ccc', fontSize: 18 }}>
+          Made with <ADIcon name="heart" size={15} color="#c62828" /> by Lucas
+          Bittencourt
         </Text>
       </View>
     </View>
