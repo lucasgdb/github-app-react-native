@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, Image } from 'react-native';
 import styles from './styles';
 
-export default function Bio({ bio, icons }) {
-  return bio
+export default memo(({ bio, icons }) =>
+  bio
     .split(' ')
     .filter(text => text !== '')
     .map((text, index) => ({ text, id: index }))
@@ -21,5 +21,5 @@ export default function Bio({ bio, icons }) {
       ) : (
         `${element.text}${array.length - 1 === elementIndex ? '' : ' '}`
       ),
-    );
-}
+    ),
+);

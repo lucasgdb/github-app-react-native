@@ -92,8 +92,8 @@ export default function App() {
 
         <View style={styles.divider} />
 
-        <View style={{ alignItems: 'center', ...styles.padding }}>
-          <Text style={{ ...styles.whiteColor, alignSelf: 'flex-start' }}>
+        <View style={[{ alignItems: 'center' }, styles.padding]}>
+          <Text style={[styles.whiteColor, { alignSelf: 'flex-start' }]}>
             Username
           </Text>
 
@@ -120,7 +120,7 @@ export default function App() {
             ) : (
               <ADIcon.Button
                 name="adduser"
-                style={{ ...styles.button, justifyContent: 'center' }}
+                style={[styles.button, { justifyContent: 'center' }]}
                 onPress={handleOnPress}
                 backgroundColor="#50046e">
                 <Text style={styles.whiteColor}>Add User</Text>
