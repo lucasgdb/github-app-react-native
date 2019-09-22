@@ -15,7 +15,8 @@ import { CirclesLoader } from 'react-native-indicator';
 import FA5 from 'react-native-vector-icons/FontAwesome5';
 import ADIcon from 'react-native-vector-icons/AntDesign';
 import Bio from './components/Bio';
-import API from './services/API';
+import API from './services/api';
+import { storeData, getData } from './services/storage';
 import styles from './styles';
 
 export default function App() {
@@ -25,10 +26,25 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function getIcons() {
-      const emojis = await API.get('/emojis');
+    async function getUsers() {
+      try {
+        const data = await getData('users');
 
-      setIcons(emojis.data);
+        if (data) {
+          setUsers(JSON.parse(data));
+        }
+      } catch {}
+    }
+
+    async function getIcons() {
+      try {
+        const emojis = await API.get('/emojis');
+
+        setIcons(emojis.data);
+      } catch {
+      } finally {
+        getUsers();
+      }
     }
 
     getIcons();
@@ -46,7 +62,11 @@ export default function App() {
         const user = await API.get(`/users/${name}`);
 
         if (users.findIndex(element => element.id === user.data.id) === -1) {
-          setUsers([...users, user.data]);
+          const newUsers = [...users, user.data];
+
+          setUsers(newUsers);
+          storeData('users', JSON.stringify(newUsers));
+
           setUsername('');
         } else {
           Alert.alert('Erro', `O usuário ${name} já foi adicionado.`);
@@ -92,7 +112,7 @@ export default function App() {
 
         <View style={styles.divider} />
 
-        <View style={[{ alignItems: 'center' }, styles.padding]}>
+        <View style={[styles.padding, { alignItems: 'center' }]}>
           <Text style={[styles.whiteColor, { alignSelf: 'flex-start' }]}>
             Username
           </Text>
