@@ -62,7 +62,28 @@ export default function App() {
         const user = await API.get(`/users/${name}`);
 
         if (users.findIndex(element => element.id === user.data.id) === -1) {
-          const newUsers = [...users, user.data];
+          const {
+            id,
+            login,
+            avatar_url,
+            name: userName,
+            bio,
+            followers,
+            following,
+          } = user.data;
+
+          const newUsers = [
+            ...users,
+            {
+              id,
+              login,
+              avatar_url,
+              name: userName,
+              bio,
+              followers,
+              following,
+            },
+          ];
 
           setUsers(newUsers);
           storeData('users', JSON.stringify(newUsers));
@@ -83,7 +104,12 @@ export default function App() {
     Alert.alert('Remove', `Are you sure you want to remove ${name}?`, [
       {
         text: 'Yes',
-        onPress: () => setUsers(users.filter(user => user.id !== id)),
+        onPress: () => {
+          const newUsers = users.filter(user => user.id !== id);
+          setUsers(newUsers);
+
+          storeData('users', JSON.stringify(newUsers));
+        },
       },
       { text: 'No' },
     ]);
