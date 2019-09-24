@@ -50,22 +50,20 @@ export default function App() {
     getIcons();
   }, []);
 
-  const handleOnChangeText = text => {
-    setUsername(text);
-  };
-
   const handleOnPress = async () => {
     if (username !== '') {
       try {
         setLoading(true);
         const name = username.trim().toLowerCase();
-        const user = await API.get(`/users/${name}`);
 
-        if (users.findIndex(element => element.id === user.data.id) === -1) {
+        if (users.findIndex(element => element.login === name) === -1) {
+          const user = await API.get(`/users/${name}`);
+
           const {
             id,
             login,
             avatar_url,
+            html_url,
             name: userName,
             bio,
             followers,
@@ -78,6 +76,7 @@ export default function App() {
               id,
               login,
               avatar_url,
+              html_url,
               name: userName,
               bio,
               followers,
@@ -148,7 +147,7 @@ export default function App() {
             placeholderTextColor="#ccc"
             autoCompleteType="username"
             autoCapitalize="none"
-            onChangeText={text => handleOnChangeText(text)}
+            onChangeText={text => setUsername(text)}
             onSubmitEditing={handleOnPress}
             defaultValue={username}
             style={styles.textInput}
