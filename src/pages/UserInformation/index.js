@@ -9,9 +9,10 @@ import {
   Image,
 } from 'react-native';
 import { CirclesLoader } from 'react-native-indicator';
+import Bio from '../../components/Bio';
 import OctIcon from 'react-native-vector-icons/Octicons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import api from '../../services/api';
+import API from '../../services/api';
 
 export default function UserInformation({ navigation }) {
   const {
@@ -23,16 +24,30 @@ export default function UserInformation({ navigation }) {
   } = navigation.state.params;
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [icons, setIcons] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const { data } = await api.get(`/users/${login}/repos`);
+      try {
+        const { data } = await API.get(`/users/${login}/repos`);
 
-      setRepos(data);
-      setLoading(false);
+        setRepos(data);
+        setLoading(false);
+      } catch {}
     }
 
-    fetchData();
+    async function getIcons() {
+      try {
+        const emojis = await API.get('/emojis');
+
+        setIcons(emojis.data);
+      } catch {
+      } finally {
+        fetchData();
+      }
+    }
+
+    getIcons();
   }, [login]);
 
   return (
@@ -121,9 +136,13 @@ export default function UserInformation({ navigation }) {
                       borderLeftColor: '#50046e',
                       paddingLeft: repo.description ? 12 : 0,
                     }}>
-                    {repo.description
-                      ? `"${repo.description}"`
-                      : 'This repository does not have a description.'}
+                    {repo.description ? (
+                      <>
+                        "<Bio bio={repo.description} icons={icons} />"
+                      </>
+                    ) : (
+                      'This repository does not have a description.'
+                    )}
                   </Text>
 
                   <View style={{ flexDirection: 'row', marginBottom: 10 }}>
