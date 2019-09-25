@@ -1,4 +1,4 @@
-# Github API
+# Github API :heart:
 
 ## Author: Lucas Bittencourt
 
@@ -18,6 +18,8 @@
   - use `sudo`
 - `cd android`
 - `./gradlew assembleRelease`
+
+## Images
 
 <p align="center">
   <img width="400" src="images/img01.jpg">
