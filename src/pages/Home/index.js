@@ -118,145 +118,146 @@ export default function Home({ navigation }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#8A05BE' }}>
-      <ScrollView>
-        <StatusBar backgroundColor="#8A05BE" barStyle="light-content" />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            onPress={() =>
-              Linking.openURL(
-                'https://github.com/lucasnaja/github-app-react-native',
-              )
-            }>
-            <FA5 name="github" size={30} color="#ededed" />
-          </TouchableOpacity>
-          <Text style={styles.h1}> GitHub API</Text>
-        </View>
+      <StatusBar backgroundColor="#8A05BE" barStyle="light-content" />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#8A05BE',
+        }}>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL(
+              'https://github.com/lucasnaja/github-app-react-native',
+            )
+          }>
+          <FA5 name="github" size={30} color="#ededed" />
+        </TouchableOpacity>
+        <Text style={styles.h1}> GitHub API</Text>
+      </View>
 
-        <View style={styles.divider} />
+      <View style={styles.divider} />
 
-        <View style={[styles.padding, { alignItems: 'center' }]}>
-          <Text style={[styles.whiteColor, { alignSelf: 'flex-start' }]}>
-            Username
-          </Text>
+      <ScrollView style={styles.padding}>
+        <Text style={[styles.whiteColor, { alignSelf: 'flex-start' }]}>
+          Username
+        </Text>
 
-          <TextInput
-            placeholder="Type the username here"
-            placeholderTextColor="#ccc"
-            autoCompleteType="username"
-            autoCapitalize="none"
-            onChangeText={text => setUsername(text)}
-            onSubmitEditing={handleOnPress}
-            defaultValue={username}
-            style={styles.textInput}
-          />
+        <TextInput
+          placeholder="Type the username here"
+          placeholderTextColor="#ccc"
+          autoCompleteType="username"
+          autoCapitalize="none"
+          onChangeText={text => setUsername(text)}
+          onSubmitEditing={handleOnPress}
+          defaultValue={username}
+          style={styles.textInput}
+        />
 
-          <View style={{ width: '100%', marginBottom: 8 }}>
-            {loading ? (
-              <View style={{ alignItems: 'center' }}>
-                <CirclesLoader
-                  size={30}
-                  color="#ccc"
-                  style={{ marginBottom: 5 }}
-                />
-              </View>
-            ) : (
-              <ADIcon.Button
-                name="adduser"
-                style={[styles.button, { justifyContent: 'center' }]}
-                onPress={handleOnPress}
-                backgroundColor="#50046e">
-                <Text style={styles.whiteColor}>Add User</Text>
-              </ADIcon.Button>
-            )}
-          </View>
-
-          {users.length > 0 ? (
-            users.map(user => (
-              <View key={user.id} style={styles.userBox}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'flex-start',
-                    marginBottom: 5,
-                  }}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate({
-                        routeName: 'UserInformation',
-                        params: {
-                          login: user.login,
-                          name: user.name,
-                          html_url: user.html_url,
-                          avatar_url: user.avatar_url,
-                          public_repos: user.public_repos,
-                        },
-                      })
-                    }>
-                    <Image
-                      style={styles.imgSize}
-                      source={{ uri: user.avatar_url }}
-                    />
-                  </TouchableOpacity>
-
-                  <View style={{ marginLeft: 8 }}>
-                    <Text style={styles.whiteColor}> {user.name}</Text>
-                    <Text style={{ color: '#ccc' }}> {user.login}</Text>
-                  </View>
-                </View>
-
-                <Text
-                  style={{
-                    color: '#ccc',
-                    marginBottom: 10,
-                    borderLeftWidth: user.bio ? 4 : 0,
-                    borderLeftColor: '#50046e',
-                    paddingLeft: user.bio ? 12 : 0,
-                  }}>
-                  {user.bio ? (
-                    <>
-                      "<Bio bio={user.bio} icons={icons} />"
-                    </>
-                  ) : (
-                    'This user does not have a bio.'
-                  )}
-                </Text>
-
-                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ color: '#50046e' }}>Followers: </Text>
-                    <Text style={{ color: '#ccc' }}>{user.followers}</Text>
-                  </View>
-
-                  <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                    <Text style={{ color: '#50046e' }}>Following: </Text>
-                    <Text style={{ color: '#ccc' }}>{user.following}</Text>
-                  </View>
-                </View>
-
-                <ADIcon.Button
-                  name="deleteuser"
-                  style={{ justifyContent: 'center' }}
-                  onPress={() => handleDelete(user.id, user.name)}
-                  backgroundColor="#c62828">
-                  <Text style={styles.whiteColor}>Remove {user.name}</Text>
-                </ADIcon.Button>
-              </View>
-            ))
-          ) : (
-            <View>
-              <Text style={{ color: '#ededed' }}>
-                There are no registered users yet.
-              </Text>
+        <View style={{ width: '100%', marginBottom: 8 }}>
+          {loading ? (
+            <View style={{ alignItems: 'center' }}>
+              <CirclesLoader
+                size={30}
+                color="#ccc"
+                style={{ marginBottom: 5 }}
+              />
             </View>
+          ) : (
+            <ADIcon.Button
+              name="adduser"
+              style={[styles.button, { justifyContent: 'center' }]}
+              onPress={handleOnPress}
+              backgroundColor="#50046e">
+              <Text style={styles.whiteColor}>Add User</Text>
+            </ADIcon.Button>
           )}
         </View>
+
+        {users.length > 0 ? (
+          users.map(user => (
+            <View key={user.id} style={styles.userBox}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  marginBottom: 5,
+                }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate({
+                      routeName: 'UserInformation',
+                      params: {
+                        login: user.login,
+                        name: user.name,
+                        html_url: user.html_url,
+                        avatar_url: user.avatar_url,
+                        public_repos: user.public_repos,
+                        icons,
+                      },
+                    })
+                  }>
+                  <Image
+                    style={styles.imgSize}
+                    source={{ uri: user.avatar_url }}
+                  />
+                </TouchableOpacity>
+
+                <View style={{ marginLeft: 8 }}>
+                  <Text style={styles.whiteColor}> {user.name}</Text>
+                  <Text style={{ color: '#ccc' }}> {user.login}</Text>
+                </View>
+              </View>
+
+              <Text
+                style={{
+                  color: '#ccc',
+                  marginBottom: 10,
+                  borderLeftWidth: user.bio ? 4 : 0,
+                  borderLeftColor: '#50046e',
+                  paddingLeft: user.bio ? 12 : 0,
+                }}>
+                {user.bio ? (
+                  <>
+                    "<Bio bio={user.bio} icons={icons} />"
+                  </>
+                ) : (
+                  'This user does not have a bio.'
+                )}
+              </Text>
+
+              <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: '#50046e' }}>Followers: </Text>
+                  <Text style={{ color: '#ccc' }}>{user.followers}</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+                  <Text style={{ color: '#50046e' }}>Following: </Text>
+                  <Text style={{ color: '#ccc' }}>{user.following}</Text>
+                </View>
+              </View>
+
+              <ADIcon.Button
+                name="deleteuser"
+                style={{ justifyContent: 'center' }}
+                onPress={() => handleDelete(user.id, user.name)}
+                backgroundColor="#c62828">
+                <Text style={styles.whiteColor}>Remove {user.name}</Text>
+              </ADIcon.Button>
+            </View>
+          ))
+        ) : (
+          <View>
+            <Text style={{ color: '#ededed' }}>
+              There are no registered users yet.
+            </Text>
+          </View>
+        )}
       </ScrollView>
 
+      <View style={styles.divider} />
       <View
         style={{ height: 30, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: '#ccc', fontSize: 18 }}>

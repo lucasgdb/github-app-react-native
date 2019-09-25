@@ -21,10 +21,10 @@ export default function UserInformation({ navigation }) {
     html_url,
     avatar_url,
     public_repos,
+    icons,
   } = navigation.state.params;
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [icons, setIcons] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -36,18 +36,7 @@ export default function UserInformation({ navigation }) {
       } catch {}
     }
 
-    async function getIcons() {
-      try {
-        const emojis = await API.get('/emojis');
-
-        setIcons(emojis.data);
-      } catch {
-      } finally {
-        fetchData();
-      }
-    }
-
-    getIcons();
+    fetchData();
   }, [login]);
 
   return (
