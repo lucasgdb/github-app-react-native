@@ -9,8 +9,8 @@
 - Linux
   - use `sudo`
 - `yarn`
-- `react-native run-android`
-- `yarn start or react-native start`
+- `yarn android`
+- `yarn start`
 
 ## How to generate an APK
 
