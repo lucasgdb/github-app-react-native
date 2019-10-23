@@ -16,6 +16,7 @@
 
 - Linux
   - use `sudo`
+  *One needs to be really careful while using sudoku which means super user do where your operating system allows user to run programs with security privileges of other users.
 - `cd android`
 - `./gradlew assembleRelease`
 
