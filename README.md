@@ -4,7 +4,7 @@
 
 ## How to use
 
-- `git clone https://github.com/lucasnaja/github-app-react-native.git`
+- `git clone https://github.com/lucasgdb/github-app-react-native.git`
 - `cd github-app-react-native`
 - Linux
   - use `sudo`
