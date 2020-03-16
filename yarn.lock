@@ -1180,13 +1180,12 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
-"@types/react-navigation@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-3.0.8.tgz#770d5217a4795fe8526e2a69cc6ccb8600c911e4"
-  integrity sha512-r8UQvBmOz7XjPE8AHTHh0SThGqModhQtSsntkmob7rczhueJIqDwBOgsEn54SJa25XzD/KBlelAWeVZ7+Ggm8A==
+"@types/react-navigation@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-3.4.0.tgz#d610d13c9162312079a8ca102660143f07432cbf"
+  integrity sha512-Y7F5zU8BTBK8tEOvUqgvwvPZ7+9vnc2UI1vHwJ/9ZJG98TntNv04GWa6lrn4MA4149pqw6cyNw/V49Yd2osAFQ==
   dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
+    react-navigation "*"
 
 "@types/react@*":
   version "16.9.2"
@@ -5799,7 +5798,7 @@ react-navigation-stack@^1.9.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-navigation@^4.2.2:
+react-navigation@*, react-navigation@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-4.2.2.tgz#8183f47c1b0c7c2350e970aa652c0fee4160ef9e"
   integrity sha512-/CdQsDkUEJWyKKK68txvFUJDO79+MYFX6DYTVbQ23YtSw/GD5J5pQ/E08IJy8PJNYgnWP/OhiOYg2UpNoh96RQ==
